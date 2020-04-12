@@ -8,7 +8,7 @@ This is a project made as a POC for learning flutter for get fun
 
 ### REST API 
 
-REST API used from https://corona.lmao.ninja
+https://corona.lmao.ninja
 
 ### NEWS API
 
