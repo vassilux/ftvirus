@@ -1,6 +1,6 @@
 #  FTVirus
 
-A Flutter sample project fro follow COVID-19 evolution
+A Flutter sample project for follow COVID-19 evolution
 
 This is a project made as a POC for learning flutter for get fun
 
