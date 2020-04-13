@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ftvirus/config/palette.dart';
 import 'package:ftvirus/config/themes.dart';
 import 'package:ftvirus/models/country_stats.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:ftvirus/utils/margin.dart';
 
 class CountryStatsWidget extends StatelessWidget {
   final CountryStats countryStats;

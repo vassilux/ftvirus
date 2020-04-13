@@ -1,5 +1,4 @@
 import 'package:ftvirus/config/palette.dart';
-import 'package:ftvirus/utils/margin.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_screen/responsive_screen.dart';

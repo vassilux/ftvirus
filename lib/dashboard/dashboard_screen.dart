@@ -5,8 +5,8 @@ import 'package:ftvirus/dashboard/dashboard_bloc.dart';
 import 'package:ftvirus/config/themes.dart';
 import 'package:ftvirus/config/palette.dart';
 import 'package:ftvirus/widgets/pie_chart_widget.dart';
+import 'package:ftvirus/widgets/row_margin_widget.dart';
 import 'package:ftvirus/widgets/state_card.dart';
-import 'package:ftvirus/utils/margin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -81,7 +81,7 @@ class _DashboardScreenState extends State<DashboardScreen>
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                YMargin(hp(29)),
+                RowMarginWidget(hp(29)),
                 Center(
                     child: SpinKitSquareCircle(
                   color: Palette.ftvColorBlue,

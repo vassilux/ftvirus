@@ -5,8 +5,8 @@ import 'package:ftvirus/config/palette.dart';
 import 'package:ftvirus/countries/countries_screen.dart';
 import 'package:ftvirus/dashboard/dashboard_screen.dart';
 import 'package:ftvirus/search/search_screen.dart';
-import 'package:ftvirus/utils/margin.dart';
 import 'package:flutter/material.dart';
+import 'package:ftvirus/widgets/row_margin_widget.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:ftvirus/dashboard/dashboard_bloc.dart';
@@ -67,7 +67,7 @@ class _HomeState extends State<Home> {
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(
               children: <Widget>[
-                const YMargin(25),
+                const RowMarginWidget(25),
                 Center(
                   child: Text(
                     'Situation Mondiale COVID 19',
@@ -77,12 +77,12 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
-                const YMargin(2),
+                const RowMarginWidget(2),
               
               ],
             ),
           ),
-          const YMargin(10),
+          const RowMarginWidget(10),
           Expanded(child: buildPageView()),
           
 

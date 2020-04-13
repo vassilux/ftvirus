@@ -6,8 +6,8 @@ import 'package:ftvirus/countries/countries_bloc.dart';
 import 'package:ftvirus/config/palette.dart';
 import 'package:ftvirus/config/themes.dart';
 import 'package:ftvirus/models/country_stats.dart';
+import 'package:ftvirus/widgets/row_margin_widget.dart';
 import 'country_stats_widget.dart';
-import 'package:ftvirus/utils/margin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -88,7 +88,7 @@ class _CountriesPageState extends State<CountriesPage>
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              YMargin(hp(29)),
+              RowMarginWidget(hp(29)),
               Center(
                   child: SpinKitSquareCircle(
                 color: Palette.ftvColorBlue,
