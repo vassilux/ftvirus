@@ -14,5 +14,10 @@ https://corona.lmao.ninja
 
 https://newsapi.org
 
-#
+### VERSIONS
+
+## Android version can be download from : https://freeapk-ca7ea.firebaseapp.com/
+
+## Web version : https://ftvirus-fb529.web.app/#/
+
 
