@@ -9,7 +9,7 @@ class ApiClient {
   static const baseUrl = "https://corona.lmao.ninja";
 
   static const historicalUrl = "https://corona.lmao.ninja/v2/historical";
-
+ 
   Dio _dio;
   ApiClient() {
     BaseOptions options = BaseOptions(
@@ -49,6 +49,26 @@ class ApiClient {
       throw e.error;
     }
   }
+
+  Future<CountryInfoHistoricalList> getHistoricalCountries(List<String> countriesCodesList, int days) async {
+      var countiriesCode = "";
+      countriesCodesList.forEach((code){
+        countiriesCode += code + ',';
+      });
+      countiriesCode = "fr,it,es,us,rus";
+      final url = '$historicalUrl/$countiriesCode?lastdays=$days';
+      print(url);
+      try {
+        final response = await _dio.get(url);
+        return CountryInfoHistoricalList.fromJson((response.data as List<dynamic>)); //.countriesInfoList;           
+      } on DioError catch (e) {
+        print(e.error);
+        throw e.error;
+      }
+    
+  }
+
+
 
   Future<CountryInfoHistorical> getHistoricalCountry(String countryCode, int days) async {
       final url = '$historicalUrl/$countryCode?lastdays=$days';

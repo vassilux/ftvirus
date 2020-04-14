@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/scheduler.dart';
+import 'package:ftvirus/widgets/row_margin_widget.dart';
 
 import 'news_widget.dart';
 import 'package:ftvirus/config/palette.dart';

@@ -30,4 +30,8 @@ class ApiRepository {
     return apiClient.getHistoricalCountry(countryCode, days);
   }
   
+
+  Future<CountryInfoHistoricalList> getHistoricalCountries(List<String> countriesCodesList, int days) {
+    return apiClient.getHistoricalCountries(countriesCodesList, days);
+  }
 }

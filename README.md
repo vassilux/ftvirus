@@ -14,7 +14,7 @@ https://corona.lmao.ninja
 
 https://newsapi.org
 
-### VERSIONS
+### VERSIONSdoc
 
 ## Android version can be download from : https://freeapk-ca7ea.firebaseapp.com/
 

@@ -1,3 +1,4 @@
+import 'package:ftvirus/models/country_info_historical.dart';
 import 'package:ftvirus/models/global_stats.dart';
 import 'package:ftvirus/repositories/api_repository.dart';
 import 'package:equatable/equatable.dart';
@@ -41,6 +42,7 @@ class DashboardLoaded extends DashboardState {
 
 class DashboardError extends DashboardState {}
 
+
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   final ApiRepository apiRepository; 
 
@@ -54,7 +56,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       yield* _mapFetchDashboardToState(event);
     } else if (event is RefreshDashboard) {
       yield* _mapRefreshDashboardToState(event);
-    }
+    } 
   }
 
   Stream<DashboardState> _mapFetchDashboardToState(FetchDashboard event) async* {

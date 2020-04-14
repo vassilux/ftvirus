@@ -12,6 +12,7 @@ import 'countries/countries_bloc.dart';
 import 'search/search_bloc.dart';
 import 'home.dart';
 import 'simple_bloc_delegate.dart';
+import 'package:ftvirus/dashboard/dashboard_countries_bloc.dart';
 
 
 void main() async {  
@@ -33,6 +34,9 @@ void main() async {
     ),
     BlocProvider<SearchBloc>(
       create: (context) => SearchBloc(apiRepository: apiRepository),
+    ),
+     BlocProvider<DashboardCountriesBloc>(
+      create: (context) => DashboardCountriesBloc(apiRepository: apiRepository),
     ),
   ], child: MyApp(apiRepository: apiRepository,)));
 }

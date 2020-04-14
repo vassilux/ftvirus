@@ -13,6 +13,7 @@ import 'package:ftvirus/dashboard/dashboard_bloc.dart';
 import 'package:ftvirus/countries/countries_bloc.dart';
 import 'package:ftvirus/news/news_screen.dart';
 import 'package:ftvirus/settings/settings_screen.dart';
+import 'package:ftvirus/dashboard/dashboard_countries_bloc.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -143,6 +144,8 @@ class _HomeState extends State<Home> {
             onPressed: () {
               if(selectedIndex == 0 ) {
                 BlocProvider.of<DashboardBloc>(context).add(FetchDashboard());
+                List<String> countries= ["fr","it","es","us","rus"];
+                BlocProvider.of<DashboardCountriesBloc>(context).add(FetchDashboardCountriesInfo(countries));
               }
 
               if(selectedIndex == 1) {

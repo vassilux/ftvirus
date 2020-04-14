@@ -35,7 +35,7 @@ class _CountriesPageState extends State<CountriesPage>
   List<DropDownOderType> _orderTypes = <DropDownOderType>[
     DropDownOderType('Confirmés', CasesOrderType.cases),
     DropDownOderType('Décès', CasesOrderType.deaths),
-    DropDownOderType('Guéris', CasesOrderType.recovred),
+    DropDownOderType('Guéries', CasesOrderType.recovred),
   
   ];
 
