@@ -6,7 +6,9 @@ import 'package:ftvirus/dashboard/dashboard_countries_bloc.dart';
 
 import 'package:ftvirus/config/themes.dart';
 import 'package:ftvirus/config/palette.dart';
-import 'package:ftvirus/widgets/countries_historical_line_chart.dart';
+import 'package:ftvirus/dashboard/slider_days_widget_screen.dart';
+import 'package:ftvirus/widgets/column_margin_widget.dart';
+
 import 'package:ftvirus/widgets/pie_chart_widget.dart';
 import 'package:ftvirus/widgets/row_margin_widget.dart';
 import 'package:ftvirus/widgets/state_card.dart';
@@ -15,6 +17,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_screen/responsive_screen.dart';
+
+import 'countries_historical_line_chart.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -35,10 +39,9 @@ class _DashboardScreenState extends State<DashboardScreen>
     //
     SchedulerBinding.instance.addPostFrameCallback((timestamp) async {
       await Future.delayed(Duration(milliseconds: 200));
-      BlocProvider.of<DashboardBloc>(context).add(FetchDashboard());
-      List<String> countries= ["fr","it","es","us","rus"];
-      BlocProvider.of<DashboardCountriesBloc>(context).add(FetchDashboardCountriesInfo(countries));
-
+      BlocProvider.of<DashboardBloc>(context).add(FetchDashboard());      
+      BlocProvider.of<DashboardCountriesBloc>(context)
+          .add(FetchDashboardCountriesInfo());
     });
 
     super.didChangeDependencies();
@@ -53,21 +56,6 @@ class _DashboardScreenState extends State<DashboardScreen>
         "Guérisons : ${formatter.format(state.currentData.recovered)}",
         () => state.currentData.recovered.toDouble());
     dataMap.putIfAbsent("Décés : ${formatter.format(state.currentData.deaths)}",
-        () => state.currentData.deaths.toDouble());
-
-    return dataMap;
-  }
-
-  Map<String, double> _getTodayPieChartData(DashboardLoaded state) {
-    Map<String, double> dataMap = Map();
-    dataMap.putIfAbsent(
-        "Confirmés : ${formatter.format(state.currentData.todayCases)}",
-        () => state.currentData.cases.toDouble());
-    dataMap.putIfAbsent(
-        "Malades : ${formatter.format(state.currentData.active)}",
-        () => state.currentData.recovered.toDouble());
-    dataMap.putIfAbsent(
-        "Décés : ${formatter.format(state.currentData.todayDeaths)}",
         () => state.currentData.deaths.toDouble());
 
     return dataMap;
@@ -114,7 +102,10 @@ class _DashboardScreenState extends State<DashboardScreen>
             ),
             Center(
               child: Text(
-                "Aujourd'hui  " + currentData.updatedDate,
+                "Aujourd'hui  " +
+                    currentData.updatedDate +
+                    ' à ' +
+                    currentData.updatedTime,
                 style: AppTheme.h2Style.copyWith(
                   color: Palette.darkgrey,
                   fontWeight: FontWeight.bold,
@@ -146,14 +137,14 @@ class _DashboardScreenState extends State<DashboardScreen>
       }
       if (state is DashboardError) {
         return Text(
-          'Something went wrong!',
+          'Oups Quelque chose a mal tourné!!',
           style: TextStyle(color: Colors.red),
         );
       }
       return Center(
           child: FloatingActionButton(
         onPressed: () {
-          //BlocProvider.of<DashboardBloc>(context).add(FetchDashboard());
+          BlocProvider.of<DashboardBloc>(context).add(FetchDashboard());
         },
         child: Icon(Icons.refresh),
         backgroundColor: Colors.green,
@@ -181,8 +172,8 @@ class _DashboardScreenState extends State<DashboardScreen>
         }
       }
 
-      if(state is DashboardCountriesError) {
-          return Center(child: Text("Countries Place holder"));
+      if (state is DashboardCountriesError) {
+        return Center(child: Text("Countries Place holder"));
       }
 
       return Text("Countries Place holder");
@@ -194,9 +185,15 @@ class _DashboardScreenState extends State<DashboardScreen>
     super.build(context);
 
     return SingleChildScrollView(
-        padding: EdgeInsets.only(top: 20),
+        padding: EdgeInsets.only(top: 20, bottom: 50),
         child: Column(
-          children: [_buildGlobalPart(context), _buildCountriesPart(context)],
+          children: [_buildGlobalPart(context), 
+           SliderDaysWidgetScreen(),
+          _buildCountriesPart(context),
+          Center(child: Text("Evolution de cas confirmès ", style: AppTheme.h2Style.copyWith(color: Palette.ftvColorBlue, fontWeight: FontWeight.bold, fontSize: 16)),)
+          
+          ],
+          
         ));
   }
 

@@ -143,9 +143,8 @@ class _HomeState extends State<Home> {
       floatingActionButton: FloatingActionButton(
             onPressed: () {
               if(selectedIndex == 0 ) {
-                BlocProvider.of<DashboardBloc>(context).add(FetchDashboard());
-                List<String> countries= ["fr","it","es","us","rus"];
-                BlocProvider.of<DashboardCountriesBloc>(context).add(FetchDashboardCountriesInfo(countries));
+                BlocProvider.of<DashboardBloc>(context).add(FetchDashboard());                
+                BlocProvider.of<DashboardCountriesBloc>(context).add(FetchDashboardCountriesInfo());
               }
 
               if(selectedIndex == 1) {

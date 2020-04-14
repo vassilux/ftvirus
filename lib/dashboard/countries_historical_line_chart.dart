@@ -4,20 +4,19 @@ import 'package:flutter/material.dart';
 
 import 'package:ftvirus/models/country_info_historical.dart';
 import 'package:ftvirus/utils/string_tools.dart';
+import 'package:intl/intl.dart';
 
 class CountriesHistoricalLineChart extends StatelessWidget {
  
   final CountryInfoHistoricalList countriesInfosList;
+  final formatter = new NumberFormat("#,###", "eu");
 
   CountriesHistoricalLineChart(    
     this.countriesInfosList,
-  ) {
-    print("ctor");
-  }
+  );
 
   @override
   Widget build(BuildContext context) {   
-
     return Container(           
             child : 
             Center(
@@ -38,21 +37,20 @@ class CountriesHistoricalLineChart extends StatelessWidget {
               domainAxis: _buildOrdinalAxisSpec(),
               primaryMeasureAxis: _buildNumericAxisSpec(),
             ))
-          );
-
-    
+          );    
   }
 
-
-  List<charts.ChartBehavior> _buildChartBehaviors() {
-    
+  List<charts.ChartBehavior> _buildChartBehaviors() {    
     return [
       charts.SeriesLegend(
           legendDefaultMeasure: charts.LegendDefaultMeasure.lastValue,
+          measureFormatter: (num value) {
+            return value == null ? '-' : '${formatter.format(value)}'; 
+          },
           showMeasures: true,
           cellPadding: const EdgeInsets.all(4.0),
           horizontalFirst: false,
-          entryTextStyle: charts.TextStyleSpec(fontSize: 15),
+          entryTextStyle: charts.TextStyleSpec(fontSize: 12),
           desiredMaxColumns: 2,
           desiredMaxRows: 2),
     ];
@@ -63,15 +61,14 @@ class CountriesHistoricalLineChart extends StatelessWidget {
         renderSpec: charts.SmallTickRendererSpec(
       
       labelStyle: charts.TextStyleSpec(
-          fontSize: 13, // size in Pts.
+          fontSize: 13, 
           color: charts.Color.black),
     ));
   }
 
   charts.NumericAxisSpec _buildNumericAxisSpec() {
     return charts.NumericAxisSpec(
-      renderSpec: charts.GridlineRendererSpec(
-        
+      renderSpec: charts.GridlineRendererSpec(        
         labelStyle:
             charts.TextStyleSpec(fontSize: 13, color: charts.Color.black),
       ),
@@ -84,18 +81,8 @@ class CountriesHistoricalLineChart extends StatelessWidget {
 
     var countriesInfos = countriesList.countriesInfoList;
 
-   /* var colorArray = [
-      charts.MaterialPalette.blue.shadeDefault.darker,
-      charts.MaterialPalette.indigo.shadeDefault.darker,
-      charts.MaterialPalette.deepOrange.shadeDefault.darker,
-      charts.MaterialPalette.gray.shadeDefault.darker,
-      charts.MaterialPalette.red.shadeDefault.darker,
-      charts.MaterialPalette.purple.shadeDefault.darker,
-    ];*/
-    //countiriesCode = "fr,it,es,us,rus";
     List<charts.Series<TimeSeriesSales, DateTime>> timelines = [];
-    print("_createSampleData");
-    var i = 0;
+
     countriesInfos.forEach((CountryInfoHistorical country) {
       
       Map<String, int> coronaCasesMap =
@@ -110,7 +97,7 @@ class CountriesHistoricalLineChart extends StatelessWidget {
     
    
     timelines.add( 
-        charts.Series<TimeSeriesSales, DateTime>(
+        charts.Series<TimeSeriesSales, DateTime>(        
         id: country.country,
        // colorFn: (_, __) => colorArray[i], //charts.MaterialPalette.blue.shadeDefault.darker,
         domainFn: (TimeSeriesSales sales, _) => sales.time,

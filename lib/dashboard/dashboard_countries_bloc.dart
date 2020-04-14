@@ -1,10 +1,12 @@
-import 'package:ftvirus/models/country_info_historical.dart';
-import 'package:ftvirus/models/global_stats.dart';
-import 'package:ftvirus/repositories/api_repository.dart';
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:ftvirus/models/country_info_historical.dart';
+import 'package:ftvirus/repositories/api_repository.dart';
 
 abstract class DashboardCountriesEvent extends Equatable {
   const DashboardCountriesEvent();
@@ -13,11 +15,15 @@ abstract class DashboardCountriesEvent extends Equatable {
 
 class FetchDashboardCountriesInfo extends DashboardCountriesEvent {
   final List<String> countriesList;
+  final int days;
 
-  FetchDashboardCountriesInfo(this.countriesList);
+  FetchDashboardCountriesInfo(
+    {this.countriesList = const ["fr","it","es","us","rus"], this.days = 15}
+  );
 
-  @override
+@override
   List<Object> get props => [];
+  
 }
 
 
@@ -47,6 +53,8 @@ class DashboardCountriesError extends DashboardCountriesState {}
 class DashboardCountriesBloc extends Bloc<DashboardCountriesEvent, DashboardCountriesState> {
   final ApiRepository apiRepository; 
 
+  final List<String> countries= ["fr","it","es","us","rus"];
+
   DashboardCountriesBloc({@required this.apiRepository}) : assert(apiRepository != null);
   @override
   DashboardCountriesState get initialState => DashboardCountriesEmpty();
@@ -61,7 +69,7 @@ class DashboardCountriesBloc extends Bloc<DashboardCountriesEvent, DashboardCoun
   Stream<DashboardCountriesState> _mapFetchCountriesInfoToState(FetchDashboardCountriesInfo event) async* {
     try {
       
-      final allData = await apiRepository.getHistoricalCountries(event.countriesList, 15);
+      final allData = await apiRepository.getHistoricalCountries(event.countriesList, event.days);
 
       if(allData.countriesInfoList.length == 0) {
          yield DashboardCountriesEmpty();

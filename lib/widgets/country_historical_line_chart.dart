@@ -3,12 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ftvirus/models/country_info_historical.dart';
 import 'package:ftvirus/utils/string_tools.dart';
+import 'package:intl/intl.dart';
 
 class CountryHistoricalLineChart extends StatelessWidget {
  
   final CountryInfoHistorical searchInfoHistorical;
+  final formatter = new NumberFormat("#,###", "eu");
 
-  const CountryHistoricalLineChart({this.searchInfoHistorical, Key key}) : super(key: key);
+  CountryHistoricalLineChart({this.searchInfoHistorical, Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,9 @@ class CountryHistoricalLineChart extends StatelessWidget {
     return [
       charts.SeriesLegend(
           legendDefaultMeasure: charts.LegendDefaultMeasure.lastValue,
+           measureFormatter: (num value) {
+            return value == null ? '-' : '${formatter.format(value)}'; 
+          },
           showMeasures: true,
           cellPadding: const EdgeInsets.all(4.0),
           horizontalFirst: false,
