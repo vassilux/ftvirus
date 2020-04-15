@@ -18,7 +18,7 @@ class FetchDashboardCountriesInfo extends DashboardCountriesEvent {
   final int days;
 
   FetchDashboardCountriesInfo(
-    {this.countriesList = const ["fr","it","es","deu","usa"], this.days = 15}
+    {this.countriesList = const ["fr","it","es","deu"], this.days = 15}
   );
 
 @override

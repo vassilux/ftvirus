@@ -1,7 +1,7 @@
 import 'package:ftvirus/config/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:responsive_screen/responsive_screen.dart';
+
 
 class StateSituationCard extends StatelessWidget {
   final String cardTitle;
@@ -21,8 +21,6 @@ class StateSituationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formatter = new NumberFormat("#,###", "eu");    
-    final Function wp = Screen(context).wp;
-    final Function hp = Screen(context).hp;
 
     return Stack(
       children: <Widget>[
@@ -90,15 +88,7 @@ class StateSituationCard extends StatelessWidget {
                                       fontSize: 18
                                 ),
                               ),
-                              
-                              /*Text(
-                                caseTitle ?? "",
-                                style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 17
-                                ),
-                              ),*/
+   
                             ],
                           ),
                           Spacer(),                         
@@ -112,19 +102,7 @@ class StateSituationCard extends StatelessWidget {
             ],
           ),
         ),
-        /*Align(
-          alignment: Alignment.bottomRight,
-          child: Column(
-            children: <Widget>[
-             
-              Container(
-                width: 25,
-                height: 25,
-                margin: EdgeInsets.all(25),                
-              ),
-            ],
-          ),
-        )*/
+
       ],
     );
   }

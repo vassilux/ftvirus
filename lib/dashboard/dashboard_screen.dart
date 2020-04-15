@@ -113,7 +113,7 @@ class _DashboardScreenState extends State<DashboardScreen>
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Container(
-                width: wp(25),
+                width: wp(40),
                 height: 80,
                 child: StateSituationCard(
                   cardTitle: 'Nouveau cas',
@@ -122,7 +122,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                 ),
               ),
               Container(
-                  width: wp(25),
+                  width: wp(40),
                   height: 80,
                   child: StateSituationCard(
                     cardTitle: 'Décés',
@@ -197,7 +197,7 @@ class _DashboardScreenState extends State<DashboardScreen>
     return Scaffold(
         body: Center(
             child: Container(
-                constraints: BoxConstraints(maxWidth: 768),
+               // constraints: BoxConstraints(maxWidth: 768),
                 child: SingleChildScrollView(
                     padding: EdgeInsets.only(top: 20, bottom: 50),
                     physics: AlwaysScrollableScrollPhysics(),
@@ -214,20 +214,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                                   fontSize: 16)),
                         )
                       ],
-                    )))));
-
-    /*return SingleChildScrollView(
-        padding: EdgeInsets.only(top: 20, bottom: 50),
-        physics: AlwaysScrollableScrollPhysics(),
-        child: Column(
-          children: [_buildGlobalPart(context), 
-           SliderDaysWidgetScreen(),
-          _buildCountriesPart(context),
-          Center(child: Text("Evolution de cas confirmès ", style: AppTheme.h2Style.copyWith(color: Palette.ftvColorBlue, fontWeight: FontWeight.bold, fontSize: 16)),)
-          
-          ],
-          
-        ));*/
+                    ))))); 
   }
 
   @override
