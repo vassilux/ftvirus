@@ -70,11 +70,12 @@ class _HomeState extends State<Home> {
               children: <Widget>[
                 const RowMarginWidget(25),
                 Center(
+                  
                   child: Text(
                     'Situation Mondiale COVID 19',
                     style: TextStyle(
                       fontSize: 20,
-                      color: Colors.black38,
+                      color: Palette.ftvColorBlue,
                     ),
                   ),
                 ),
@@ -84,11 +85,13 @@ class _HomeState extends State<Home> {
             ),
           ),
           const RowMarginWidget(10),
+          //buildPageView(),
           Expanded(child: buildPageView()),
           
 
         ],
       ),
+      
       bottomNavigationBar: Container(
         decoration: BoxDecoration(color: Colors.white, boxShadow: [
           BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(0.9))

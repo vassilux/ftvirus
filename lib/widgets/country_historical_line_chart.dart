@@ -131,7 +131,7 @@ class CountryHistoricalLineChart extends StatelessWidget {
       },
       if (coronaRecoveredDataTimeSeriesSales.isNotEmpty) ...{
         charts.Series<TimeSeriesSales, DateTime>(
-          id: 'Guérisons',
+          id: 'Guéris',
           colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault.darker,
           domainFn: (TimeSeriesSales sales, _) => sales.time,
           measureFn: (TimeSeriesSales sales, _) => sales.sales,

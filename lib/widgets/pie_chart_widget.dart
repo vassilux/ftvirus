@@ -19,6 +19,7 @@ class PieChartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 300,
       child: Center(
         child: PieChart(
           legendStyle: textColor != null

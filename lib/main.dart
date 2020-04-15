@@ -1,10 +1,6 @@
 import 'dart:async';
-import 'dart:io';
-
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:package_info/package_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,7 +14,6 @@ import 'countries/countries_bloc.dart';
 import 'search/search_bloc.dart';
 import 'home.dart';
 import 'simple_bloc_delegate.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -69,25 +64,28 @@ class _MyAppState extends State<MyApp> {
   _MyAppState({@required this.apiRepository});
 
   @override
-  void initState() {    
+  void initState() {
     super.initState();
   }
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<DashboardBloc, DashboardState>(
+  Widget build(BuildContext context) {  
+
+     return BlocBuilder<DashboardBloc, DashboardState>(
       builder: (BuildContext context, DashboardState state) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: Colors.blue,
-          ),
-          home: BlocProvider(
+          ),          
+         home: BlocProvider(
             create: (context) => DashboardBloc(apiRepository: apiRepository),
             child: Home(),
           ),
+          
         );
       },
     );
   }
 }
+

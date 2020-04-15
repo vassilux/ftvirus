@@ -18,7 +18,7 @@ class FetchDashboardCountriesInfo extends DashboardCountriesEvent {
   final int days;
 
   FetchDashboardCountriesInfo(
-    {this.countriesList = const ["fr","it","es","us","rus"], this.days = 15}
+    {this.countriesList = const ["fr","it","es","deu","usa"], this.days = 15}
   );
 
 @override
@@ -53,7 +53,7 @@ class DashboardCountriesError extends DashboardCountriesState {}
 class DashboardCountriesBloc extends Bloc<DashboardCountriesEvent, DashboardCountriesState> {
   final ApiRepository apiRepository; 
 
-  final List<String> countries= ["fr","it","es","us","rus"];
+  final List<String> countries= ["fr","it","es","deu"];
 
   DashboardCountriesBloc({@required this.apiRepository}) : assert(apiRepository != null);
   @override

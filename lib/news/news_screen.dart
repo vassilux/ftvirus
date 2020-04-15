@@ -74,14 +74,25 @@ class _NewsPageState extends State<NewsPage>
         );
       }
 
+      if (state is NewsEmpty) {
+        return Center(
+          child : Text(
+          'Rien trouvé, essayez de recharger à nouveau',
+          style: TextStyle(
+                      fontSize: 20,
+                      color: Palette.ftvColorBlue,
+                    ),
+        ));
+      }
+
       return Center(
-          child: FloatingActionButton(
-        onPressed: () {
-          BlocProvider.of<NewsBloc>(context).add(FetchNews());
-        },
-        child: Icon(Icons.refresh),
-        backgroundColor: Palette.ftvColorBlue,
-      ));
+          child: Text(
+          '...',
+          style: TextStyle(
+                      fontSize: 20,
+                      color: Palette.ftvColorBlue,
+                    ),
+        ));
     }));
   }
 

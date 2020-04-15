@@ -20,7 +20,6 @@ class DropDownOderType {
   final CasesOrderType orderType;
 
   DropDownOderType(this.label, this.orderType);
-  
 }
 
 class CountriesPage extends StatefulWidget {
@@ -35,8 +34,7 @@ class _CountriesPageState extends State<CountriesPage>
   List<DropDownOderType> _orderTypes = <DropDownOderType>[
     DropDownOderType('Confirmés', CasesOrderType.cases),
     DropDownOderType('Décès', CasesOrderType.deaths),
-    DropDownOderType('Guéries', CasesOrderType.recovred),
-  
+    DropDownOderType('Guéris', CasesOrderType.recovred),
   ];
 
   @override
@@ -66,7 +64,7 @@ class _CountriesPageState extends State<CountriesPage>
     final Function hp = Screen(context).hp;
 
     return SingleChildScrollView(
-        child: Column(children: [      
+        child: Column(children: [
       _buildDropDownOrderBox(context),
       //_buildSearchBox(context),
       BlocBuilder<CountriesBloc, CountriesState>(
@@ -104,14 +102,26 @@ class _CountriesPageState extends State<CountriesPage>
             style: TextStyle(color: Colors.red),
           );
         }
-        return Center(
-            child: FloatingActionButton(
-          onPressed: () {
-            BlocProvider.of<CountriesBloc>(context).add(FetchCountries());
-          },
-          child: Icon(Icons.refresh),
-          backgroundColor: Palette.ftvColorBlue,
-        ));
+
+        if (state is CountriesEmpty) {
+          return Center(
+              child: Text(
+            'Rien trouvé, essayez de recharger à nouveau',
+            style: TextStyle(
+              fontSize: 20,
+              color: Palette.ftvColorBlue,
+            ),
+          ));
+        }
+         return Center(
+              child: Text(
+            'Patience',
+            style: TextStyle(
+              fontSize: 20,
+              color: Palette.ftvColorBlue,
+            ),
+          ));
+
       })
     ]));
   }
@@ -134,18 +144,15 @@ class _CountriesPageState extends State<CountriesPage>
       setState(() {
         orderTypeListDropDown.add(new DropdownMenuItem(
             value: orderType.label,
-            child: Text(
-              orderType.label,
-              style: AppTheme.h2Style.copyWith(
-                        color: Palette.ftvColorBlue,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-            ))));
-     });
+            child: Text(orderType.label,
+                style: AppTheme.h2Style.copyWith(
+                  color: Palette.ftvColorBlue,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ))));
+      });
     }
-  
 
-    
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -153,34 +160,32 @@ class _CountriesPageState extends State<CountriesPage>
           LineIcons.arrow_circle_o_down,
           size: 25.0,
           color: Palette.ftvColorBlue,
-          
         ),
         SizedBox(width: 50.0),
         DropdownButton(
-          items:orderTypeListDropDown,
-          onChanged: (selectedOrderType) {
-            print('$selectedOrderType');
-            setState(() {
-              _selectedOrder = _orderTypes.firstWhere(
-                (order) => order.label == selectedOrderType,
-                orElse: () => _orderTypes.first);
+            items: orderTypeListDropDown,
+            onChanged: (selectedOrderType) {
+              print('$selectedOrderType');
+              setState(() {
+                _selectedOrder = _orderTypes.firstWhere(
+                    (order) => order.label == selectedOrderType,
+                    orElse: () => _orderTypes.first);
 
-                BlocProvider.of<CountriesBloc>(context).add(FetchCountries(orderType : _selectedOrder.orderType));
-             
-            });
-          },
-          value: _selectedOrder == null ? null : _selectedOrder.label,
-          
-          isExpanded: false,
-          hint: Text(
-            'Order de trie',
-            style: AppTheme.h2Style.copyWith(
-                        color: Palette.ftvColorBlue,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-          ),
-        )
-        )],
+                BlocProvider.of<CountriesBloc>(context)
+                    .add(FetchCountries(orderType: _selectedOrder.orderType));
+              });
+            },
+            value: _selectedOrder == null ? null : _selectedOrder.label,
+            isExpanded: false,
+            hint: Text(
+              'Order de trie',
+              style: AppTheme.h2Style.copyWith(
+                color: Palette.ftvColorBlue,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ))
+      ],
     );
   }
 

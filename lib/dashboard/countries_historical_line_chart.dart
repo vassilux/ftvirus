@@ -17,7 +17,8 @@ class CountriesHistoricalLineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {   
-    return Container(           
+    return Container(       
+            height: 800,    
             child : 
             Center(
                 child: charts.TimeSeriesChart(

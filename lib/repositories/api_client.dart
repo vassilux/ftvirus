@@ -52,10 +52,9 @@ class ApiClient {
 
   Future<CountryInfoHistoricalList> getHistoricalCountries(List<String> countriesCodesList, int days) async {
       var countiriesCode = "";
-      countriesCodesList.forEach((code){
-        countiriesCode += code + ',';
-      });
-      countiriesCode = "fr,it,es,us,rus";
+
+      countiriesCode = countriesCodesList.join(', ');
+            
       final url = '$historicalUrl/$countiriesCode?lastdays=$days';
       print(url);
       try {

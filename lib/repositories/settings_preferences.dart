@@ -1,23 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/widgets.dart';
-import 'package:flutter_country_picker/country.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
 const favorite_country = "favorite_country";
-
-/*
-
-///static const Country GB = Country(
-///    asset: "assets/flags/gb_flag.png",
-///    dialingCode: "44",
-///    isoCode: "GB",
-///    name: "United Kingdom",
-///    currency: "British pound",
-///    currencyISO: "GBP",
-///  );
-
-*/
 
 class SettingCountry {
   String asset;

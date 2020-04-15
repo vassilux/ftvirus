@@ -3,12 +3,9 @@ import 'dart:async';
 import 'package:flutter/scheduler.dart';
 import 'package:ftvirus/dashboard/dashboard_bloc.dart';
 import 'package:ftvirus/dashboard/dashboard_countries_bloc.dart';
-
 import 'package:ftvirus/config/themes.dart';
 import 'package:ftvirus/config/palette.dart';
 import 'package:ftvirus/dashboard/slider_days_widget_screen.dart';
-import 'package:ftvirus/widgets/column_margin_widget.dart';
-
 import 'package:ftvirus/widgets/pie_chart_widget.dart';
 import 'package:ftvirus/widgets/row_margin_widget.dart';
 import 'package:ftvirus/widgets/state_card.dart';
@@ -17,6 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_screen/responsive_screen.dart';
+
 
 import 'countries_historical_line_chart.dart';
 
@@ -39,7 +37,7 @@ class _DashboardScreenState extends State<DashboardScreen>
     //
     SchedulerBinding.instance.addPostFrameCallback((timestamp) async {
       await Future.delayed(Duration(milliseconds: 200));
-      BlocProvider.of<DashboardBloc>(context).add(FetchDashboard());      
+      BlocProvider.of<DashboardBloc>(context).add(FetchDashboard());
       BlocProvider.of<DashboardCountriesBloc>(context)
           .add(FetchDashboardCountriesInfo());
     });
@@ -53,7 +51,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         "Malades : ${formatter.format(state.currentData.active)}",
         () => state.currentData.cases.toDouble());
     dataMap.putIfAbsent(
-        "Guérisons : ${formatter.format(state.currentData.recovered)}",
+        "Guéris : ${formatter.format(state.currentData.recovered)}",
         () => state.currentData.recovered.toDouble());
     dataMap.putIfAbsent("Décés : ${formatter.format(state.currentData.deaths)}",
         () => state.currentData.deaths.toDouble());
@@ -70,7 +68,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            RowMarginWidget(hp(29)),
+            RowMarginWidget(10), //hp(29)),
             Center(
                 child: SpinKitSquareCircle(
               color: Palette.ftvColorBlue,
@@ -115,7 +113,8 @@ class _DashboardScreenState extends State<DashboardScreen>
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Container(
-                width: wp(50),
+                width: wp(25),
+                height: 80,
                 child: StateSituationCard(
                   cardTitle: 'Nouveau cas',
                   caseTitle: "Aujourd'hui",
@@ -123,7 +122,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                 ),
               ),
               Container(
-                  width: wp(45),
+                  width: wp(25),
+                  height: 80,
                   child: StateSituationCard(
                     cardTitle: 'Décés',
                     caseTitle: "Aujourd'hui",
@@ -131,7 +131,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     cardColor: Palette.ftvColorRed,
                   )),
             ]),
-            SizedBox(height: hp(3)),
+            // SizedBox(height: hp(3)),
           ],
         );
       }
@@ -141,14 +141,25 @@ class _DashboardScreenState extends State<DashboardScreen>
           style: TextStyle(color: Colors.red),
         );
       }
+      if (state is DashboardCountriesEmpty) {
+        return Center(
+          child : Text(
+          'Rien trouvé, essayez de recharger à nouveau',
+          style: TextStyle(
+                      fontSize: 20,
+                      color: Palette.ftvColorBlue,
+                    ),
+        ));
+      }
       return Center(
-          child: FloatingActionButton(
-        onPressed: () {
-          BlocProvider.of<DashboardBloc>(context).add(FetchDashboard());
-        },
-        child: Icon(Icons.refresh),
-        backgroundColor: Colors.green,
-      ));
+          child : Text(
+          'Patience...',
+          style: TextStyle(
+                      fontSize: 20,
+                      color: Palette.ftvColorBlue,
+                    ),
+        ));
+      
     });
   }
 
@@ -162,7 +173,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         try {
           return Container(
             height: hp(50),
-            width: wp(120),
+            width: wp(90),
             child: CountriesHistoricalLineChart(
               currentData,
             ),
@@ -183,9 +194,31 @@ class _DashboardScreenState extends State<DashboardScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    return Scaffold(
+        body: Center(
+            child: Container(
+                constraints: BoxConstraints(maxWidth: 768),
+                child: SingleChildScrollView(
+                    padding: EdgeInsets.only(top: 20, bottom: 50),
+                    physics: AlwaysScrollableScrollPhysics(),
+                    child: Column(
+                      children: [
+                        _buildGlobalPart(context),
+                        SliderDaysWidgetScreen(),
+                        _buildCountriesPart(context),
+                        Center(
+                          child: Text("Evolution de cas confirmès ",
+                              style: AppTheme.h2Style.copyWith(
+                                  color: Palette.ftvColorBlue,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16)),
+                        )
+                      ],
+                    )))));
 
-    return SingleChildScrollView(
+    /*return SingleChildScrollView(
         padding: EdgeInsets.only(top: 20, bottom: 50),
+        physics: AlwaysScrollableScrollPhysics(),
         child: Column(
           children: [_buildGlobalPart(context), 
            SliderDaysWidgetScreen(),
@@ -194,7 +227,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           
           ],
           
-        ));
+        ));*/
   }
 
   @override
