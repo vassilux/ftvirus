@@ -18,7 +18,7 @@ class ApiClient {
   }
 
   Future<GlobalStats> getAllCountryData() async {
-    final url = '$baseUrl/all';
+    final url = '$baseUrl/v2/all';
     try {
       final response = await _dio.get(url);
       return GlobalStats.fromJson(response.data);
@@ -35,7 +35,7 @@ class ApiClient {
     }else if(order == CasesOrderType.recovred){
       param = "recovred";
     }
-    final url = '$baseUrl/countries?sort=$param';    
+    final url = '$baseUrl/v2/countries?sort=$param';    
     print('$url');
     print(url);
     try {

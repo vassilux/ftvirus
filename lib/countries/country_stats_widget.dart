@@ -80,7 +80,7 @@ class CountryStatsWidget extends StatelessWidget {
                       Expanded(
                         child: Center(
                             child: Text(
-                          "Guéries",
+                          "Guéris",
                           style: AppTheme.h2Style.copyWith(color: Palette.ftvColorGreen, fontWeight: FontWeight.bold, fontSize: 16),
                         )),
                       )
