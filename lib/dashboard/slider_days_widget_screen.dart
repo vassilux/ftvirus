@@ -41,7 +41,7 @@ class SliderDaysWidgetScreenState extends State<SliderDaysWidgetScreen> {
         Slider(
           value: _daysValue.toDouble(),
           min: 7,
-          max: 60,
+          max: 180,
           divisions: 10,
           label: '${_daysValue.toInt()}',
           onChangeStart: (double value) {

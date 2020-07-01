@@ -8,6 +8,8 @@ import 'package:ftvirus/repositories/api_news.dart';
 import 'package:ftvirus/repositories/repositories.dart';
 import 'package:ftvirus/repositories/settings_preferences.dart';
 import 'package:ftvirus/dashboard/dashboard_countries_bloc.dart';
+
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dashboard/dashboard_bloc.dart';
 import 'news/news_bloc.dart';
 import 'countries/countries_bloc.dart';
@@ -22,8 +24,12 @@ void main() async {
   final ApiRepository apiRepository =
       ApiRepository(apiClient: ApiClient(), apiNews: new ApiNews());
   BlocSupervisor.delegate = SimpleBlocDelegate();
+
+  var sharedPreferences = await SharedPreferences.getInstance();
+  
   runApp(MultiBlocProvider(
       providers: [
+        
         BlocProvider<DashboardBloc>(
           create: (context) => DashboardBloc(apiRepository: apiRepository),
         ),

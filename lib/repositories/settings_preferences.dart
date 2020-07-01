@@ -1,44 +1,21 @@
 import 'dart:convert';
-import 'package:flutter/widgets.dart';
+import 'package:ftvirus/models/setting_country.dart';
+import 'package:ftvirus/models/settings_dashboard_countries.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 const favorite_country = "favorite_country";
+const dashboard_countries = "dashboard_countries";
 
-class SettingCountry {
-  String asset;
-  String isoCode;
-  String name;
-  String dialingCode;
-  String currency;
-  String currencyISO;
+const dashboard_country1 = "dashboard_country1";
+const dashboard_country2 = "dashboard_country2";
+const dashboard_country3 = "dashboard_country3";
+const dashboard_country4 = "dashboard_country4";
 
-  SettingCountry({@required this.isoCode, @required this.name});
 
-  SettingCountry.fromJson(Map<String, dynamic> json)
-      : asset = json["asset"],
-        isoCode = json['isoCode'],
-        name = json['name'],
-        dialingCode = json["dialingCode"],
-        currency = json["currency"],
-        currencyISO = json["currencyISO"];
-       
 
-  Map<String, dynamic> toJson() => {
-        'asset': asset,
-        'isoCode': isoCode,
-        'name': name,
-        'dialingCode': dialingCode,
-        'currency' : currency,
-        'currencyISO' : currencyISO
-      };
-}
 
 //isoCode: "FR", name: "France"
 class SettingsPreferences {
-  static SettingCountry defaultFavoritCountry =
-      SettingCountry(isoCode: "FR", name: "France");
-
   static final SettingsPreferences _settingsPreferences =
       SettingsPreferences._internal();
 
@@ -48,34 +25,73 @@ class SettingsPreferences {
 
   SharedPreferences _sharedPreferences;
 
-  SettingCountry favoriteCountry;
+  SettingCountry favoriteCountry = SettingCountry(
+      name: "France",
+      asset: "assets/flags/fr_flag.png", 
+      dialingCode: "33",
+      isoCode: "FR",
+      currency: "EUR",
+      currencyISO: "EUR");
+
+  SettingsDashboardCountries dashboardCountries = SettingsDashboardCountries();
 
   Future<void> initSharedPreferencesProp() async {
     _sharedPreferences = await SharedPreferences.getInstance();
     _initFavoriteCountry();
+    _initDashboardCountries();
+  }
+
+  List<SettingCountry> getDashboardCountries(){
+    return dashboardCountries.countries;
   }
 
   void _initFavoriteCountry() {
-    var favoriteCountryString = _sharedPreferences.getString(favorite_country);
+    var favoriteCountryString =
+        _sharedPreferences.getString(dashboard_country1);
     if (favoriteCountryString != null) {
       favoriteCountry =
-          SettingCountry.fromJson(json.decode(favoriteCountryString));
-    } else
-      favoriteCountry = defaultFavoritCountry;
-      favoriteCountry.asset = "assets/flags/fr_flag.png";
-      favoriteCountry.dialingCode="33";
-      favoriteCountry.isoCode="FR";
-       favoriteCountry.currency="EUR";
-       favoriteCountry.currencyISO="EUR";
-
-    var country = favoriteCountry.toJson();
-    _sharedPreferences.setString(favorite_country, json.encode(country));
+          SettingCountry.fromJson(json.decode(favoriteCountryString)); 
+    }
   }
 
-  Future<void> saveFavoriteCountry(SettingCountry country) async {
-    print("$country");
+  Future<void> setFavoriteCountry(SettingCountry country) async {
     favoriteCountry.isoCode = country.isoCode;
     favoriteCountry.name = country.name;
+    favoriteCountry.asset = country.asset;
     await _sharedPreferences.setString(favorite_country, json.encode(country));
   }
+
+  void _initDashboardCountries() {
+    var dashboardCountriesString =
+        _sharedPreferences.getString(dashboard_countries);
+
+    if (dashboardCountriesString != null) {
+      dashboardCountries.fromString(dashboardCountriesString);
+    }
+  }
+
+  Future<void> addDashboardCountry(SettingCountry country) async {
+    dashboardCountries.addCountry(country);
+    await _saveDashboardCountries();
+  }
+
+  Future<void> removeDashboardCountry(SettingCountry country) async {
+    dashboardCountries.removeCountry(country);
+    await _saveDashboardCountries();
+  }
+
+  Future<void> _saveDashboardCountries() async {
+    await _sharedPreferences.setString(
+        favorite_country, dashboardCountries.toString());
+  }
+
+  List<String> getisoCodes() {
+    List<String> isocodes = [];   
+
+    for (int i = 0; i < dashboardCountries.countries?.length ?? 0; i++) {
+      isocodes.add(dashboardCountries.countries[i].isoCode);
+    }
+    return isocodes;
+  }
+ 
 }

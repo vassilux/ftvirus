@@ -10,6 +10,7 @@ import 'package:responsive_screen/responsive_screen.dart';
 import 'search_bloc.dart';
 import 'package:ftvirus/repositories/settings_preferences.dart';
 import 'package:flutter_country_picker/flutter_country_picker.dart';
+import 'package:ftvirus/models/setting_country.dart';
 
 class SearchScreen extends StatefulWidget {
   @override

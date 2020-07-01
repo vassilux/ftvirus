@@ -18,7 +18,7 @@ import 'package:firebase_admob/firebase_admob.dart';
 
 const String AD_MOB_APP_ID = 'ca-app-pub-7052516540890615~5325039440';
 const String AD_MOB_TEST_DEVICE =
-    'test_device_id - run ad then check device logs for value';
+    'DB9DBD6F4224F26E8B654F2B23B258D0';
 const String AD_MOB_AD_ID = 'ca-app-pub-7052516540890615/9699398721';
 
 class Home extends StatefulWidget {
@@ -28,14 +28,19 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int selectedIndex = 0;
-
+  //
+  
+  PageController pageController = PageController(
+    initialPage: 0,
+    keepPage: true,
+  );
   //
   BannerAd _bannerAd;
   bool _adShown = false;
 
   BannerAd createBannerAd() {
     return new BannerAd(
-      size: AdSize.smartBanner,
+      size: AdSize.banner,
       adUnitId:  AD_MOB_AD_ID, //BannerAd.testAdUnitId,
       targetingInfo: targetingInfo,
       listener: (MobileAdEvent event) {
@@ -52,43 +57,16 @@ class _HomeState extends State<Home> {
 
   //Add the following code inside the State of the StatefulWidget
   static const MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-  /*  keywords: <String>[
+    keywords: <String>[
       'covid',
       'coronavirus',
-      'evolution'
-    ], *///Add your own keywords
-  //  contentUrl: '', //Add a contentURL if any
-  //  childDirected: false, //Choose whether childDirected or not
+      'covid19'
+    ], //Add your own keywords  
     testDevices: <String>[
       AD_MOB_TEST_DEVICE
-    ], // Android emulators are considered test devices
+    ], 
   );
 
-  /*BannerAd myBanner = BannerAd(
-    adUnitId: "ca-app-pub-7052516540890615~5325039440",
-    //adUnitId: BannerAd.testAdUnitId,
-    size: AdSize
-        .smartBanner, //Choose from six sizes: banner,fullBanner,largeBanner,leaderboard,mediumRectangle,smartBanner
-    targetingInfo: targetingInfo,
-    listener: (MobileAdEvent event) {
-      //Use listener to check the status of your ad
-      print("BannerAd event is $event");
-    },
-  );*/
-
-  /*InterstitialAd myInterstitial = InterstitialAd(
-    //Similar to Banner ad
-    adUnitId: InterstitialAd.testAdUnitId,
-    targetingInfo: targetingInfo,
-    listener: (MobileAdEvent event) {
-      print("InterstitialAd event is $event");
-    },
-  );*/
-
-  PageController pageController = PageController(
-    initialPage: 0,
-    keepPage: true,
-  );
 
   Widget buildPageView() {
     return PageView(
@@ -113,14 +91,7 @@ class _HomeState extends State<Home> {
   }
 
   @override
-  void initState() {
-    //Use your own App ID from Admob
-    /* FirebaseAdMob.instance
-        .initialize(appId: "ca-app-pub-3940256099942544~3347511713");
-    //myBanner..load()..show(); //load Banner Ad
-    myInterstitial
-      ..load()
-      ..show(); //load Interstitial Ad*/
+  void initState() {   
     super.initState();
     FirebaseAdMob.instance.initialize(appId: AD_MOB_APP_ID);
     _adShown = false;
@@ -183,7 +154,8 @@ class _HomeState extends State<Home> {
         //    _adShown ? _buildAdmobPlaceWidget(context) : null,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            if (selectedIndex == 0) {
+            if (selectedIndex == 0) {              
+              //
               BlocProvider.of<DashboardBloc>(context).add(FetchDashboard());
               BlocProvider.of<DashboardCountriesBloc>(context)
                   .add(FetchDashboardCountriesInfo());
