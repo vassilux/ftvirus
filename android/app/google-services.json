@@ -1,0 +1,41 @@
+{
+  "project_info": {
+    "project_number": "1034138366866",
+    "firebase_url": "https://ftvirus-fb529.firebaseio.com",
+    "project_id": "ftvirus-fb529",
+    "storage_bucket": "ftvirus-fb529.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1034138366866:android:1b133d11ff5f4b01e6074b",
+        "android_client_info": {
+          "package_name": "com.vassilux.covidcases"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1034138366866-jimm7ahkcpumv21h8gflivgq393mj2gn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBD1JDBKflrl7eZSEmTkJwwCkq9yUVgNsg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1034138366866-jimm7ahkcpumv21h8gflivgq393mj2gn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id":"ca-app-pub-7052516540890615~5325039440"
+    }
+  ],
+  "configuration_version": "1"
+}
