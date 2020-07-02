@@ -102,16 +102,38 @@ class _SettingsPageState extends State<SettingsPage>
                 style: AppTheme.h2Style.copyWith(
                     color: Palette.darkgrey,
                     fontWeight: FontWeight.bold,
-                    fontSize: 16)),
+                    fontSize: 20)),
             Container(
               height: hp(30),
-              color: Colors.blue,
+              decoration: BoxDecoration(               
+                border: Border.all(
+                  color: Palette.accentColor,
+                  width: 8,
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
               child: ListView.builder(
                   padding: new EdgeInsets.symmetric(vertical: 8.0),
                   shrinkWrap: false,
                   itemCount: countries.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return CountryStatsWidget(country: countries[index]);
+                    final country = countries[index];
+                    return Dismissible(
+                      key: Key(country.toString()),
+                      onDismissed: (direction) {
+                        // Remove the item from the data source.
+                        setState(() {
+                          SettingsPreferences()
+                              .dashboardCountries
+                              .removeCountry(country);
+                        });
+
+                        // Then show a snackbar.
+                        Scaffold.of(context).showSnackBar(
+                            SnackBar(content: Text("$country dismissed")));
+                      },
+                      child: CountryStatsWidget(country: countries[index]),
+                    );
                   }),
             ),
           ],
@@ -123,24 +145,32 @@ class _SettingsPageState extends State<SettingsPage>
     final Function hp = Screen(context).hp;
 
     return Container(
-      height: hp(10),
+      decoration: BoxDecoration(
+        //color: Palette.accentColor,
+        border: Border.all(
+          color: Palette.accentColor,
+          width: 8,
+        ),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      height: hp(12),
       width: wp(100),
-      color: Colors.amberAccent,
+      //color: Colors.amberAccent,
       child: ListTile(
         leading: new IconButton(
-          icon: Icon(Icons.add_circle, color: Colors.blue, size: 50.0),
-          onPressed: () {
-            if(_selectedDashboardCountry != null) {
-              SettingCountry settingCountry = SettingCountry(isoCode: _selectedDashboardCountry.isoCode, name: _selectedDashboardCountry.name,
-              asset: _selectedDashboardCountry.asset);
-              SettingsPreferences().addDashboardCountry(settingCountry);
-              setState(() {
-               _selectedDashboardCountry = null;
-              });
-              
-
-          }}
-        ),
+            icon: Icon(Icons.add_circle, color: Colors.blue, size: 50.0),
+            onPressed: () {
+              if (_selectedDashboardCountry != null) {
+                SettingCountry settingCountry = SettingCountry(
+                    isoCode: _selectedDashboardCountry.isoCode,
+                    name: _selectedDashboardCountry.name,
+                    asset: _selectedDashboardCountry.asset);
+                SettingsPreferences().addDashboardCountry(settingCountry);
+                setState(() {
+                  _selectedDashboardCountry = null;
+                });
+              }
+            }),
         title: Container(
           child: CountryPicker(
             dense: false,

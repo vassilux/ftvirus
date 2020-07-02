@@ -16,13 +16,19 @@ class CountryInfoHistoricalList {
     this.countriesInfoList,
 });
 
-  factory CountryInfoHistoricalList.fromJson(List<dynamic> json) {
+  factory CountryInfoHistoricalList.fromJson(dynamic json) {
 
-    List<CountryInfoHistorical> countriesInfoList = new List<CountryInfoHistorical>();
+    List<CountryInfoHistorical> countriesInfoList = new List<CountryInfoHistorical>();  
+    //API can retourn just MAP for one country query
+    if(json is List)   {
+      countriesInfoList = List<CountryInfoHistorical>.from(json.map((x) => CountryInfoHistorical.fromJsonMap(x)));
+    }else {
+      var country = CountryInfoHistorical.fromJsonMap(json);
+      countriesInfoList.add(country);
+    }
 
 
-    countriesInfoList = List<CountryInfoHistorical>.from(json.map((x) => CountryInfoHistorical.fromJsonMap(x)));
-
+    
     countriesInfoList.forEach((country){
          print("$country");
     });

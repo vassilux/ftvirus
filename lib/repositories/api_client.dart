@@ -58,8 +58,8 @@ class ApiClient {
       final url = '$historicalUrl/$countiriesCode?lastdays=$days';
       print(url);
       try {
-        final response = await _dio.get(url);
-        return CountryInfoHistoricalList.fromJson((response.data as List<dynamic>)); //.countriesInfoList;           
+        final response = await _dio.get(url);        
+        return CountryInfoHistoricalList.fromJson((response.data )); //.countriesInfoList;   as List<dynamic>        
       } on DioError catch (e) {
         print(e.error);
         throw e.error;

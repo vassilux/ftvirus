@@ -67,6 +67,14 @@ class SettingsPreferences {
 
     if (dashboardCountriesString != null) {
       dashboardCountries.fromString(dashboardCountriesString);
+    }else {
+      dashboardCountries.addCountry(SettingCountry(
+      name: "France",
+      asset: "assets/flags/fr_flag.png", 
+      dialingCode: "33",
+      isoCode: "FR",
+      currency: "EUR",
+      currencyISO: "EUR"));
     }
   }
 
@@ -89,7 +97,7 @@ class SettingsPreferences {
     List<String> isocodes = [];   
 
     for (int i = 0; i < dashboardCountries.countries?.length ?? 0; i++) {
-      isocodes.add(dashboardCountries.countries[i].isoCode);
+      isocodes.add(dashboardCountries.countries[i].isoCode.toLowerCase());
     }
     return isocodes;
   }

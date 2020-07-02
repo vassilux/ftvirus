@@ -64,10 +64,7 @@ class DashboardCountriesBloc
       FetchDashboardCountriesInfo event) async* {
     try {
       //
-      List<String> countries = SettingsPreferences().getisoCodes();
-      if(countries.length == 0) {
-        countries = ["fr", "it", "es", "deu"];
-      }
+      List<String> countries = SettingsPreferences().getisoCodes();     
          
       final allData = await apiRepository.getHistoricalCountries(
           countries, event.days);
